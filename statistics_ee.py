@@ -16,6 +16,11 @@ sahlen = pd.read_sql("SELECT new_enh_start, new_enh_end, new_enh1_start, new_enh
                      "`Fragment chromosome`, `Fragment chromosome.1` from "
                      "sahlen_enhancer_enhancer", con=engine)
 
+engine.execute(
+    "CREATE TABLE sahlen_enh_per_enh SELECT `Fragment chromosome`, new_enh_start, new_enh_end, count"
+    "(distinct `Fragment chromosome.1`, new_enh2_start, new_enh2_end) as num "
+    "FROM sahlen_enhancer_enhancer GROUP BY `Fragment chromosome`, new_enh_start, new_enh_end")
+
 
 sahlen.columns = sahlen.columns.str.strip().str.lower().str.replace(' ', '_').str.replace('.', '')
 

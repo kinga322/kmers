@@ -57,3 +57,11 @@ promo_range_per_promo.hist(bins=300)
 plt.xlim([0, 2000000])
 plt.title("Sahlen promoter range per promoter (from TSS)")
 plt.show()
+
+enh_length = pd.read_sql_query("SELECT (Fragment_end_coordinate-Fragment_start_coordinate) as length "
+                               "FROM sahlen_promoter_enhancer", engine)
+
+enh_length.hist(bins=500)
+plt.xlim([0, 4000])
+plt.title("Enhancers length")
+plt.show()
