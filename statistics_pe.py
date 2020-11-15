@@ -15,19 +15,34 @@ engine.execute("UPDATE sahlen_promoter_enhancer SET genome_distance = "
 
 # Count degree of sequences
 
-engine.execute("CREATE TABLE sahlen_promoters_from_pe "
-               "SELECT Promoter_chr, new_promo_start, new_promo_end, "
+engine.execute("CREATE TABLE sahlen_frag_per_promo "
+               "SELECT Promoter_chr, Promoter_TSS, new_promo_start, new_promo_end, "
                "count(distinct Fragment_chromosome, new_enh_start, new_enh_end) "
                "AS degree "
                "FROM sahlen_promoter_enhancer "
                "GROUP BY Promoter_chr, new_promo_start, new_promo_end")
 
-engine.execute("CREATE TABLE sahlen_enhancers_from_pe "
-               "SELECT Fragment_chromosome, new_enh_start, new_enh_end, "
+engine.execute("CREATE TABLE sahlen_promo_per_frag "
+               "SELECT Fragment_chromosome, Fragment_start_coordinate, Fragment_end_coordinate, "
+               "new_enh_start, new_enh_end, "
                "count(distinct Promoter_chr, new_promo_start, new_promo_end) "
                "AS degree "
                "FROM sahlen_promoter_enhancer "
                "GROUP BY Fragment_chromosome, new_enh_start, new_enh_end")
+
+engine.execute("ALTER TABLE sahlen_promoter_enhancer ADD (promoter_degree INT, enhancer_degree INT)")
+
+engine.execute("UPDATE sahlen_promoter_enhancer JOIN sahlen_promo_per_frag "
+               "ON sahlen_promoter_enhancer.new_enh_start=sahlen_promo_per_frag.new_enh_start "
+               "AND sahlen_promoter_enhancer.new_enh_end=sahlen_promo_per_frag.new_enh_end "
+               "AND sahlen_promoter_enhancer.Fragment_chromosome=sahlen_promo_per_frag.Fragment_chromosome "
+               "SET sahlen_promoter_enhancer.enhancer_degree=sahlen_promo_per_frag.num")
+
+engine.execute("UPDATE sahlen_promoter_enhancer JOIN sahlen_frag_per_promo "
+               "ON sahlen_promoter_enhancer.new_promo_start=sahlen_frag_per_promo.new_promo_start "
+               "AND sahlen_promoter_enhancer.new_promo_end=sahlen_frag_per_promo.new_promo_end "
+               "AND sahlen_promoter_enhancer.Promoter_chr=sahlen_frag_per_promo.Promoter_chr "
+               "SET sahlen_promoter_enhancer.promoter_degree=sahlen_frag_per_promo.num")
 
 dataset = "sahlen"
 path = "/home/kinga/Dokumenty/Studia/licencjat_old/data/"
@@ -59,3 +74,5 @@ for row in sahlen.itertuples():
                 " AND new_enh_end=" + str(row.new_promo2_end)
 
     engine.execute(sql_query, con=engine)
+
+
