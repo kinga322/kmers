@@ -58,7 +58,7 @@ def kmers_to_db(chromo, start, end, kmers_dict):
     query = "UPDATE sahlen_promoters_from_pe SET " + stmt + " WHERE Promoter_chr='" + chromo + \
             "' AND new_promo_start=" + start + " AND new_promo_end=" + end
     print(query)
-    cursor.execute(query)
+    #cursor.execute(query)
 
 
 enhancers = pd.read_sql("SELECT Promoter_chr, new_promo_start, new_promo_end FROM sahlen_promoters_from_pe",
@@ -71,3 +71,4 @@ for row in enhancers.itertuples():
         print(row)
     if row[0] % 100 == 0:
         connection.commit()
+
