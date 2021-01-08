@@ -1,0 +1,17 @@
+CREATE TABLE fantom_promoters_dinucleotides
+SELECT DISTINCT promoter_chr, new_promo_start, new_promo_end, promoter_degree FROM fantom;
+ALTER TABLE promoters_dinucleotides_fantom
+ADD (AA smallint, AC smallint, AG smallint, AT smallint,
+  CA smallint, CC smallint, CG smallint, CT smallint,
+  GA smallint, GC smallint, GG smallint, GT smallint,
+  TA smallint, TC smallint, TG smallint, TT smallint,
+  "GC_percentage" float);
+
+CREATE TABLE fantom_enhancers_dinucleotides
+SELECT DISTINCT enhancer_chr, new_enh_start, new_enh_end, enhancer_degree FROM fantom;
+ALTER TABLE fantom_enhancers_dinucleotides
+ADD (AA smallint, AC smallint, AG smallint, AT smallint,
+  CA smallint, CC smallint, CG smallint, CT smallint,
+  GA smallint, GC smallint, GG smallint, GT smallint,
+  TA smallint, TC smallint, TG smallint, TT smallint,
+  "GC_percentage" float);
