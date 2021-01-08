@@ -1,0 +1,17 @@
+CREATE TABLE rubin_promoters_dinucleotides
+SELECT DISTINCT bait_chr, new_promo_start, new_promo_end, promoter_degree FROM rubin_promoter_enhancer;
+ALTER TABLE rubin_promoters_dinucleotides
+ADD (AA smallint, AC smallint, AG smallint, AT smallint,
+  CA smallint, CC smallint, CG smallint, CT smallint,
+  GA smallint, GC smallint, GG smallint, GT smallint,
+  TA smallint, TC smallint, TG smallint, TT smallint,
+  "GC_percentage" float);
+
+CREATE TABLE rubin_enhancers_dinucleotides
+SELECT DISTINCT otherEnd_chr, new_enh_start, new_enh_end, enhancer_degree FROM rubin_promoter_enhancer;
+ALTER TABLE rubin_enhancers_dinucleotides
+ADD (AA smallint, AC smallint, AG smallint, AT smallint,
+  CA smallint, CC smallint, CG smallint, CT smallint,
+  GA smallint, GC smallint, GG smallint, GT smallint,
+  TA smallint, TC smallint, TG smallint, TT smallint,
+  "GC_percentage" float);
