@@ -66,6 +66,7 @@ def substr_count(st, sub):
 # count_dinucleotides("fantom_enhancers", "enhancer_chr")
 # count_dinucleotides("fantom_promoters", "promoter_chr")
 # count_dinucleotides("rubin", "promoters", "bait_chr")
+count_dinucleotides("rubin", "enhancers", "otherEnd_chr")
 
 
 def count_gc_percentage(dataset, seq_type, chromo_col):
@@ -98,8 +99,9 @@ def count_gc_percentage(dataset, seq_type, chromo_col):
             connection.commit()
 
 
-# count_gc_percentage("sahlen_promoters", "Promoter_chr")
-# count_gc_percentage("sahlen_enhancers", "Fragment_chromosome")
-# count_gc_percentage("fantom_enhancers", "enhancer_chr")
+# count_gc_percentage("sahlen", "promoters", "Promoter_chr")
+# count_gc_percentage("sahlen", "enhancers", "Fragment_chromosome")
+# count_gc_percentage("fantom", "enhancers", "enhancer_chr")
 # count_gc_percentage("fantom", "promoters", "promoter_chr")
-count_gc_percentage("rubin", "promoters", "bait_chr")
+# count_gc_percentage("rubin", "promoters", "bait_chr")
+count_gc_percentage("rubin", "enhancers", "otherEnd_chr")
